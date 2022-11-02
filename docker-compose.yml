@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+  novnc:
+    container_name: novnc
+    build: .
+    ports:
+      - "80:80"
