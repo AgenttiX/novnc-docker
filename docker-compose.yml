@@ -4,5 +4,11 @@ services:
   novnc:
     container_name: novnc
     build: .
+    # image: agenttix/novnc:main
+    env_file:
+      - ./config.env
     ports:
       - "80:80"
+    # command: /novnc/utils/novnc_proxy --vnc host.docker.internal:5901 --listen 0.0.0.0:80 --syslog SERVER_IP --ssl-only --cert CERT --key KEY
+    labels:
+      - "com.centurylinklabs.watchtower.scope=novnc"

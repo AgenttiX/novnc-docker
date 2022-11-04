@@ -15,4 +15,9 @@ RUN \
     && rm "websockify.tar.gz" \
     && ln -s "/novnc/vnc.html" "/novnc/index.html"
 
+RUN \
+    sed -i "/wait ${proxy_pid}/i if [ -n \"\$AUTOCONNECT\" ]; then sed -i \"s/'autoconnect', false/'autoconnect', '\$AUTOCONNECT'/\" /novnc/app/ui.js; fi" /novnc/utils/novnc_proxy \
+    && sed -i "/wait ${proxy_pid}/i if [ -n \"\$VIEW_ONLY\" ]; then sed -i \"s/UI.rfb.viewOnly = UI.getSetting('view_only');/UI.rfb.viewOnly = \$VIEW_ONLY;/\" /novnc/app/ui.js; fi" /novnc/utils/novnc_proxy \
+    && sed -i "/wait ${proxy_pid}/i if [ -n \"\$VNC_PASSWORD\" ]; then sed -i \"s/WebUtil.getConfigVar('password')/'\$VNC_PASSWORD'/\" /novnc/app/ui.js; fi" /novnc/utils/novnc_proxy
+
 CMD ["/novnc/utils/novnc_proxy", "--vnc", "host.docker.internal:5901", "--listen", "0.0.0.0:80"]
