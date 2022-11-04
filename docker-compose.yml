@@ -3,8 +3,8 @@ version: "3"
 services:
   novnc:
     container_name: novnc
-    build: .
-    # image: agenttix/novnc:main
+    # build: .
+    image: agenttix/novnc:main
     env_file:
       - ./config.env
     ports:
@@ -12,3 +12,24 @@ services:
     # command: /novnc/utils/novnc_proxy --vnc host.docker.internal:5901 --listen 0.0.0.0:80 --syslog SERVER_IP --ssl-only --cert CERT --key KEY
     labels:
       - "com.centurylinklabs.watchtower.scope=novnc"
+    restart: always
+    deploy:
+      restart_policy:
+        max_attempts: 3
+        window: 30s
+  watchtower:
+    container_name: novnc-watchtower
+    hostname: watchtower
+    image: containrrr/watchtower:latest
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    # Run once a week on Sunday at 03:00
+    command: --cleanup --schedule "0 0 3 * * 0" --scope novnc
+    labels:
+      - "com.centurylinklabs.watchtower.scope=novnc"
+    restart: always
+    deploy:
+      restart_policy:
+        max_attempts: 3
+        window: 30s
