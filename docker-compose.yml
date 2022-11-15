@@ -13,10 +13,11 @@ services:
     labels:
       - "com.centurylinklabs.watchtower.scope=novnc"
     restart: always
-    deploy:
-      restart_policy:
-        max_attempts: 3
-        window: 30s
+    # Restart policies seem to break container restarting after a reboot on Windows
+    # deploy:
+    #   restart_policy:
+    #     max_attempts: 3
+    #     window: 30s
   watchtower:
     container_name: novnc-watchtower
     hostname: watchtower
@@ -29,7 +30,7 @@ services:
     labels:
       - "com.centurylinklabs.watchtower.scope=novnc"
     restart: always
-    deploy:
-      restart_policy:
-        max_attempts: 3
-        window: 30s
+    # deploy:
+    #   restart_policy:
+    #     max_attempts: 3
+    #     window: 30s
