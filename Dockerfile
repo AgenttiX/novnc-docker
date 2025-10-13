@@ -1,7 +1,7 @@
-FROM python:3.11
+FROM python:3.14
 
-ARG NOVNC_VERSION="1.3.0"
-ARG WEBSOCKIFY_VERSION="0.10.0"
+ARG NOVNC_VERSION="1.6.0"
+ARG WEBSOCKIFY_VERSION="0.13.0"
 
 RUN \
     pip install --no-cache-dir numpy \
