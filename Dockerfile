@@ -1,10 +1,10 @@
-FROM python:3.14
+FROM alpine:latest
 
 ARG NOVNC_VERSION="1.6.0"
 ARG WEBSOCKIFY_VERSION="0.13.0"
 
 RUN \
-    pip install --no-cache-dir numpy \
+    apk add --no-cache bash py3-numpy \
     && wget "https://github.com/novnc/noVNC/archive/refs/tags/v${NOVNC_VERSION}.tar.gz" -O "novnc.tar.gz" \
     && wget "https://github.com/novnc/websockify/archive/refs/tags/v${WEBSOCKIFY_VERSION}.tar.gz" -O "websockify.tar.gz" \
     && mkdir "/novnc" \
